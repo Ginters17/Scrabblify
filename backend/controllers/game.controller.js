@@ -34,16 +34,24 @@ export const updateGame = async (req, res) => {
 }
 
 export const createGame = async (req, res) => {
-    const game = req.body;
-
-    const newGame = new Game(game);
-
     try {
+        const { name, players } = req.body;
+
+        if (!players || players.length < 2 || players.some(p => p.trim() === "")) {
+            return res.status(400).json({ success: false, message: "At least two valid players are required." });
+        }
+
+        const newGame = new Game({
+            name: name || "Untitled Game",
+            players: players.map(player => ({ name: player.trim() })),
+            createdAt: new Date()
+        });
+
         await newGame.save();
-        res.status(201).json({ success: true, data: newGame});
+
+        res.status(201).json({ success: true, data: newGame });
+    } catch (error) {
+        console.error("Error in create game:", error.message);
+        res.status(500).json({ success: false, message: "Server error" });
     }
-    catch (error){
-        console.log("Error in create game: ", error.message);
-        res.status(500).json({ success: false, message: "Server error"});
-    }
-}
+};

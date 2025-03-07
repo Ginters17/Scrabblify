@@ -4,7 +4,7 @@ import { createGame, getGame, updateGame } from "../controllers/game.controller.
 
 const router = express.Router();
 
-router.post("/", createGame);
+router.post("/create", createGame);
 router.get("/:id", getGame);
 router.put("/:id", updateGame);
 

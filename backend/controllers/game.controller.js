@@ -41,9 +41,15 @@ export const createGame = async (req, res) => {
             return res.status(400).json({ success: false, message: "At least two valid players are required." });
         }
 
+        // Assign playerId starting from 1
+        const mappedPlayers = players.map((player, index) => ({
+            userId: index + 1,
+            name: player.trim()
+        }));
+
         const newGame = new Game({
             name: name || "Untitled Game",
-            players: players.map(player => ({ name: player.trim() })),
+            players: mappedPlayers,
             createdAt: new Date()
         });
 
@@ -55,3 +61,4 @@ export const createGame = async (req, res) => {
         res.status(500).json({ success: false, message: "Server error" });
     }
 };
+

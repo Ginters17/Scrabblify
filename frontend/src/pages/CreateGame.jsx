@@ -1,6 +1,7 @@
 import { Box, Button, VStack, Text, Input, Container, Link } from "@chakra-ui/react";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 
 const CreateGame = () => {
   const [gameName, setGameName] = useState(""); // Optional game name
@@ -26,7 +27,7 @@ const CreateGame = () => {
       return;
     }
 
-    const response = await fetch("http://localhost:5000/api/games", {
+    const response = await fetch("http://localhost:5000/api/games/create", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name: gameName.trim() || "Untitled Game", players: validPlayers }),
@@ -79,11 +80,15 @@ const CreateGame = () => {
         <Button colorScheme="pink" size="lg" w="full" onClick={handleSubmit}>
           Start Game
         </Button>
-        <Link to="/" style={{ display: "block", width: "100%" }}>
-            <Button colorScheme="purple" size="lg" w="full">
-              Back
-            </Button>
-        </Link>
+        <Button
+          as={RouterLink}
+          to="/"
+          colorScheme="purple"
+          size="lg"
+          width="full"
+        >
+          Back
+        </Button>
       </VStack>
     </Box>
   );

@@ -2,14 +2,14 @@ import mongoose from "mongoose";
 import { nanoid } from "nanoid";
 
 const TurnSchema = new mongoose.Schema({
-    playerId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    playerId: { type: String, ref: 'User', required: true },
     points: { type: Number, required: true },
     playedWord: { type: String, required: false },
     timestamp: { type: Date, default: Date.now }
   });
   
   const PlayerSchema = new mongoose.Schema({
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    userId: { type: String, ref: 'User', required: true},
     name: { type: String, required: true },
     totalPoints: { type: Number, default: 0 }
   });
